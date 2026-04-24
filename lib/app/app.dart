@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../features/auth/presentation/login_page.dart';
+import '../features/todo/presentation/todo_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const TodoPage(),
     );
   }
 }

@@ -16,7 +16,7 @@ brew install fvm
 프로젝트 루트에 `.fvmrc`가 포함되어 있습니다.
 
 ```bash
-cd /Users/kylee/workspace/app-test
+cd <프로젝트_루트_경로>
 fvm use
 ```
 
@@ -45,6 +45,8 @@ fvm flutter run
 
 ## 현재 포함 기능
 
-- Riverpod 기반 로그인 상태관리
-- Dio 기반 로그인 API 호출 (`https://reqres.in/api/login`)
-- SharedPreferences 토큰 저장
+- TODO 추가/완료 토글/삭제
+- TODO 필터(전체/미완료/완료)
+- SharedPreferences 기반 로컬 영구 저장(앱 재실행 유지)
+- 대시보드형 KPI 칩(전체/진행중/완료/완료율)
+- 빠른 입력 UX(Enter 추가, 삭제 실행취소 스낵바)
