@@ -73,82 +73,88 @@ class _TodoPageState extends ConsumerState<TodoPage> {
               ),
             ),
             const SizedBox(height: 12),
-            SegmentedButton<TodoFilter>(
-              segments: const [
-                ButtonSegment(value: TodoFilter.all, label: Text('전체')),
-                ButtonSegment(value: TodoFilter.active, label: Text('미완료')),
-                ButtonSegment(value: TodoFilter.completed, label: Text('완료')),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                _FilterChip(
+                  label: '전체',
+                  isSelected: state.filter == TodoFilter.all,
+                  onSelected: () => viewModel.setFilter(TodoFilter.all),
+                ),
+                _FilterChip(
+                  label: '미완료',
+                  isSelected: state.filter == TodoFilter.active,
+                  onSelected: () => viewModel.setFilter(TodoFilter.active),
+                ),
+                _FilterChip(
+                  label: '완료',
+                  isSelected: state.filter == TodoFilter.completed,
+                  onSelected: () => viewModel.setFilter(TodoFilter.completed),
+                ),
               ],
-              selected: {state.filter},
-              onSelectionChanged: (selected) {
-                viewModel.setFilter(selected.first);
-              },
             ),
             const SizedBox(height: 12),
             Expanded(
-              child:
-                  state.isLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : state.filteredItems.isEmpty
+              child: state.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : state.filteredItems.isEmpty
                       ? _buildEmptyState()
                       : ListView.builder(
-                        itemCount: state.filteredItems.length,
-                        itemBuilder: (context, index) {
-                          final item = state.filteredItems[index];
-                          return AnimatedContainer(
-                            duration: const Duration(milliseconds: 180),
-                            margin: const EdgeInsets.only(bottom: 8),
-                            child: Card(
-                              elevation: 0,
-                              child: ListTile(
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 2,
-                                ),
-                                leading: InkWell(
-                                  borderRadius: BorderRadius.circular(24),
-                                  onTap: () => viewModel.toggleTodo(item.id),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4),
-                                    child: Checkbox(
-                                      value: item.isCompleted,
-                                      onChanged:
-                                          (_) => viewModel.toggleTodo(item.id),
+                          itemCount: state.filteredItems.length,
+                          itemBuilder: (context, index) {
+                            final item = state.filteredItems[index];
+                            return AnimatedContainer(
+                              duration: const Duration(milliseconds: 180),
+                              margin: const EdgeInsets.only(bottom: 8),
+                              child: Card(
+                                elevation: 0,
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 2,
+                                  ),
+                                  leading: InkWell(
+                                    borderRadius: BorderRadius.circular(24),
+                                    onTap: () => viewModel.toggleTodo(item.id),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4),
+                                      child: Checkbox(
+                                        value: item.isCompleted,
+                                        onChanged: (_) =>
+                                            viewModel.toggleTodo(item.id),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                title: Text(
-                                  item.title,
-                                  style: TextStyle(
-                                    fontWeight:
-                                        item.isCompleted
-                                            ? FontWeight.w400
-                                            : FontWeight.w600,
-                                    color:
-                                        item.isCompleted
-                                            ? Theme.of(
+                                  title: Text(
+                                    item.title,
+                                    style: TextStyle(
+                                      fontWeight: item.isCompleted
+                                          ? FontWeight.w400
+                                          : FontWeight.w600,
+                                      color: item.isCompleted
+                                          ? Theme.of(
                                               context,
                                             ).colorScheme.onSurfaceVariant
-                                            : Theme.of(
+                                          : Theme.of(
                                               context,
                                             ).colorScheme.onSurface,
-                                    decoration:
-                                        item.isCompleted
-                                            ? TextDecoration.lineThrough
-                                            : TextDecoration.none,
+                                      decoration: item.isCompleted
+                                          ? TextDecoration.lineThrough
+                                          : TextDecoration.none,
+                                    ),
+                                  ),
+                                  trailing: IconButton(
+                                    tooltip: '삭제',
+                                    icon: const Icon(Icons.delete_outline),
+                                    onPressed: () =>
+                                        _deleteWithUndo(viewModel, item.id),
                                   ),
                                 ),
-                                trailing: IconButton(
-                                  tooltip: '삭제',
-                                  icon: const Icon(Icons.delete_outline),
-                                  onPressed:
-                                      () => _deleteWithUndo(viewModel, item.id),
-                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
+                            );
+                          },
+                        ),
             ),
           ],
         ),
@@ -245,6 +251,30 @@ class _KpiChip extends StatelessWidget {
           Text(value, style: const TextStyle(fontWeight: FontWeight.w700)),
         ],
       ),
+    );
+  }
+}
+
+class _FilterChip extends StatelessWidget {
+  const _FilterChip({
+    required this.label,
+    required this.isSelected,
+    required this.onSelected,
+  });
+
+  final String label;
+  final bool isSelected;
+  final VoidCallback onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return ChoiceChip(
+      label: Text(label, softWrap: false),
+      selected: isSelected,
+      showCheckmark: false,
+      labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+      visualDensity: VisualDensity.compact,
+      onSelected: (_) => onSelected(),
     );
   }
 }
