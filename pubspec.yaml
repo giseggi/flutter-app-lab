@@ -1,5 +1,5 @@
-name: app_test
-description: Flutter starter template for backend developers.
+name: shokuba
+description: Anonymous workplace community for verified professionals in Japan.
 publish_to: "none"
 
 version: 1.0.0+1
@@ -11,8 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.5.1
-  dio: ^5.4.3+1
-  shared_preferences: ^2.2.3
+  supabase_flutter: ^2.5.6
 
 dev_dependencies:
   flutter_test:

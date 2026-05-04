@@ -1,52 +1,34 @@
-# app_test
+# Shokuba
 
-Flutter 입문용 백엔드 개발자 템플릿입니다.
+일본 직장인을 위한 회사 인증 기반 익명 커뮤니티 Flutter 앱입니다.
 
-## FVM 기반 실행 방법
-
-### 1) FVM 설치 (macOS)
-
-```bash
-brew tap leoafarias/fvm
-brew install fvm
-```
-
-### 2) 프로젝트 SDK 고정
-
-프로젝트 루트에 `.fvmrc`가 포함되어 있습니다.
-
-```bash
-cd <프로젝트_루트_경로>
-fvm use
-```
-
-### 3) 의존성 설치 및 실행
+## 실행
 
 ```bash
 fvm flutter pub get
-fvm flutter run
+fvm flutter run \
+  --dart-define=SUPABASE_URL=<project-url> \
+  --dart-define=SUPABASE_ANON_KEY=<publishable-or-anon-key>
 ```
 
-## 참고
+Supabase 값이 없으면 로그인 화면에서 설정 안내를 표시하고, 피드 repository는 테스트/개발용 demo 구현으로 대체됩니다.
 
-- VSCode/Cursor 설정은 `.vscode/settings.json`에 포함되어 있습니다.
-- IDE가 프로젝트의 SDK를 `.fvm/flutter_sdk`로 사용하도록 맞춰둔 상태입니다.
+## 현재 MVP
 
-## TODO (네이티브 실행 준비)
+- 회사 이메일 매직링크 로그인
+- 개인 이메일 도메인 차단
+- 익명 게시글 피드
+- 전체/회사별/업계별/직군별 게시판
+- 게시글 작성
+- 댓글 조회/작성
+- 게시글 신고
+- Supabase repository와 테스트용 fake repository 분리
 
-- [ ] Android Studio 설치
-- [ ] Android SDK 설치 및 경로 확인 (`flutter doctor`)
-- [ ] Android 에뮬레이터 1개 생성 후 부팅
-- [ ] Android 라이선스 동의 (`flutter doctor --android-licenses`)
-- [ ] Xcode 설치 (App Store)
-- [ ] Xcode 초기 설정 완료 (`xcode-select`, `xcodebuild -runFirstLaunch`)
-- [ ] CocoaPods 설치 (`brew install cocoapods`)
-- [ ] `fvm flutter doctor`에서 Android/Xcode 항목 초록 상태 확인
+## 검증
 
-## 현재 포함 기능
+```bash
+fvm flutter analyze
+fvm flutter test
+```
 
-- TODO 추가/완료 토글/삭제
-- TODO 필터(전체/미완료/완료)
-- SharedPreferences 기반 로컬 영구 저장(앱 재실행 유지)
-- 대시보드형 KPI 칩(전체/진행중/완료/완료율)
-- 빠른 입력 UX(Enter 추가, 삭제 실행취소 스낵바)
+Supabase DB 초안은 `docs/SUPABASE_SCHEMA.sql`을 참고합니다.

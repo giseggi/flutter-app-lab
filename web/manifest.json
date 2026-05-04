@@ -1,11 +1,11 @@
 {
-    "name": "app_test",
-    "short_name": "app_test",
+    "name": "Shokuba",
+    "short_name": "Shokuba",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Anonymous workplace community for verified professionals in Japan.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

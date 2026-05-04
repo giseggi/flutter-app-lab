@@ -1,8 +1,8 @@
-import 'models/user_session.dart';
-
 abstract class AuthRepository {
-  Future<UserSession> login({
-    required String email,
-    required String password,
-  });
+  bool get isConfigured;
+  bool get isSignedIn;
+  Stream<bool> get sessionChanges;
+
+  Future<void> sendMagicLink(String email);
+  Future<void> signOut();
 }
