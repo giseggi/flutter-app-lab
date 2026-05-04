@@ -36,14 +36,14 @@ class _SignInPageState extends ConsumerState<SignInPage> {
               shrinkWrap: true,
               children: [
                 Text(
-                  '会社で働く人のための匿名コミュニティ',
+                  '일본에서 일하는 한국인을 위한 익명 커뮤니티',
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '会社メールで認証し、実名を出さずに職場の話題を共有できます。',
+                  '일본 회사 이메일로 인증하고, 실명 없이 직장과 생활 이야기를 나눌 수 있습니다.',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: colors.onSurfaceVariant,
                       ),
@@ -54,7 +54,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.send,
                   decoration: const InputDecoration(
-                    labelText: '会社メール',
+                    labelText: '회사 이메일',
                     hintText: 'name@company.co.jp',
                     prefixIcon: Icon(Icons.alternate_email),
                   ),
@@ -73,19 +73,19 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
                       : const Icon(Icons.mark_email_read_outlined),
-                  label: const Text('認証リンクを送信'),
+                  label: const Text('인증 링크 전송'),
                 ),
                 const SizedBox(height: 16),
                 if (!state.isConfigured)
                   const _Notice(
                     icon: Icons.settings_outlined,
                     text:
-                        'SUPABASE_URL と SUPABASE_ANON_KEY を dart-define で設定してください。',
+                        'SUPABASE_URL과 SUPABASE_ANON_KEY를 dart-define으로 설정해 주세요.',
                   ),
                 if (state.sentToEmail != null)
                   _Notice(
                     icon: Icons.check_circle_outline,
-                    text: '${state.sentToEmail} に認証リンクを送信しました。',
+                    text: '${state.sentToEmail}로 인증 링크를 보냈습니다.',
                   ),
                 if (state.errorMessage != null)
                   _Notice(

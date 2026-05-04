@@ -19,12 +19,12 @@ class FeedPage extends ConsumerWidget {
         title: const Text('Shokuba'),
         actions: [
           IconButton(
-            tooltip: '更新',
+            tooltip: '새로고침',
             onPressed: controller.load,
             icon: const Icon(Icons.refresh),
           ),
           IconButton(
-            tooltip: 'ログアウト',
+            tooltip: '로그아웃',
             onPressed: () =>
                 ref.read(authControllerProvider.notifier).signOut(),
             icon: const Icon(Icons.logout),
@@ -34,7 +34,7 @@ class FeedPage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _openComposer(context, ref),
         icon: const Icon(Icons.edit_outlined),
-        label: const Text('投稿'),
+        label: const Text('글쓰기'),
       ),
       body: SafeArea(
         child: Column(
@@ -130,7 +130,7 @@ class _PostList extends StatelessWidget {
           SizedBox(height: 80),
           Icon(Icons.forum_outlined, size: 44),
           SizedBox(height: 12),
-          Center(child: Text('まだ投稿がありません')),
+          Center(child: Text('아직 게시글이 없습니다')),
         ],
       );
     }
@@ -220,7 +220,7 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
   final _titleController = TextEditingController();
   final _bodyController = TextEditingController();
   BoardKind _boardKind = BoardKind.all;
-  String _jobBadge = 'エンジニア';
+  String _jobBadge = '개발';
   bool _isSubmitting = false;
 
   @override
@@ -233,14 +233,14 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('投稿を作成')),
+      appBar: AppBar(title: const Text('게시글 작성')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           DropdownButtonFormField<BoardKind>(
             initialValue: _boardKind,
             decoration: const InputDecoration(
-              labelText: '掲示板',
+              labelText: '게시판',
               prefixIcon: Icon(Icons.dashboard_outlined),
             ),
             items: BoardKind.values
@@ -259,10 +259,10 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
           DropdownButtonFormField<String>(
             initialValue: _jobBadge,
             decoration: const InputDecoration(
-              labelText: '職種バッジ',
+              labelText: '직무 배지',
               prefixIcon: Icon(Icons.work_outline),
             ),
-            items: const ['エンジニア', '企画', '営業', '人事', '経理', 'デザイン']
+            items: const ['개발', '기획', '영업', '인사', '회계', '디자인']
                 .map((job) => DropdownMenuItem(value: job, child: Text(job)))
                 .toList(),
             onChanged: (value) {
@@ -273,7 +273,7 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
           TextField(
             controller: _titleController,
             decoration: const InputDecoration(
-              labelText: 'タイトル',
+              labelText: '제목',
               prefixIcon: Icon(Icons.title),
             ),
             maxLength: 80,
@@ -282,7 +282,7 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
           TextField(
             controller: _bodyController,
             decoration: const InputDecoration(
-              labelText: '本文',
+              labelText: '본문',
               alignLabelWithHint: true,
             ),
             minLines: 8,
@@ -298,7 +298,7 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
                 : const Icon(Icons.send_outlined),
-            label: const Text('匿名で投稿'),
+            label: const Text('익명으로 게시'),
           ),
         ],
       ),
@@ -310,7 +310,7 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
     final body = _bodyController.text.trim();
     if (title.isEmpty || body.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('タイトルと本文を入力してください')),
+        const SnackBar(content: Text('제목과 본문을 입력해 주세요')),
       );
       return;
     }
@@ -330,7 +330,7 @@ class _ComposePostPageState extends ConsumerState<ComposePostPage> {
       if (!mounted) return;
       setState(() => _isSubmitting = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('投稿できませんでした')),
+        const SnackBar(content: Text('게시글을 등록하지 못했습니다')),
       );
     }
   }
@@ -371,10 +371,10 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('投稿'),
+        title: const Text('게시글'),
         actions: [
           IconButton(
-            tooltip: '通報',
+            tooltip: '신고',
             onPressed: () => _report(
               repository,
               ReportTargetType.post,
@@ -393,7 +393,7 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
                 _PostCard(post: widget.post),
                 const SizedBox(height: 16),
                 Text(
-                  'コメント',
+                  '댓글',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
@@ -412,7 +412,7 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
                     if (comments.isEmpty) {
                       return const Padding(
                         padding: EdgeInsets.all(24),
-                        child: Center(child: Text('まだコメントがありません')),
+                        child: Center(child: Text('아직 댓글이 없습니다')),
                       );
                     }
                     return Column(
@@ -435,14 +435,14 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
                     child: TextField(
                       controller: _commentController,
                       decoration: const InputDecoration(
-                        hintText: '匿名でコメント',
+                        hintText: '익명으로 댓글 쓰기',
                         prefixIcon: Icon(Icons.reply_outlined),
                       ),
                     ),
                   ),
                   const SizedBox(width: 8),
                   IconButton.filled(
-                    tooltip: '送信',
+                    tooltip: '보내기',
                     onPressed: _submitComment,
                     icon: const Icon(Icons.send),
                   ),
@@ -477,7 +477,7 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
     );
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('通報を受け付けました')),
+      const SnackBar(content: Text('신고가 접수되었습니다')),
     );
   }
 }
@@ -543,8 +543,8 @@ class _Badge extends StatelessWidget {
 
 String _relativeTime(DateTime dateTime) {
   final diff = DateTime.now().difference(dateTime);
-  if (diff.inMinutes < 1) return '今';
-  if (diff.inHours < 1) return '${diff.inMinutes}分前';
-  if (diff.inDays < 1) return '${diff.inHours}時間前';
-  return '${diff.inDays}日前';
+  if (diff.inMinutes < 1) return '방금';
+  if (diff.inHours < 1) return '${diff.inMinutes}분 전';
+  if (diff.inDays < 1) return '${diff.inHours}시간 전';
+  return '${diff.inDays}일 전';
 }

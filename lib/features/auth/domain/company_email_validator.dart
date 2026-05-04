@@ -23,13 +23,13 @@ class CompanyEmailValidator {
     final email = rawEmail.trim().toLowerCase();
     final parts = email.split('@');
     if (parts.length != 2 || parts.any((part) => part.isEmpty)) {
-      return const CompanyEmailValidation.invalid('会社メールを入力してください');
+      return const CompanyEmailValidation.invalid('회사 이메일을 입력해 주세요');
     }
 
     final domain = parts.last;
     if (!domain.contains('.') || _blockedDomains.contains(domain)) {
       return const CompanyEmailValidation.invalid(
-        '個人メールでは登録できません',
+        '개인 이메일로는 가입할 수 없습니다',
       );
     }
 

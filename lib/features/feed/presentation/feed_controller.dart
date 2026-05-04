@@ -59,7 +59,7 @@ class FeedController extends StateNotifier<FeedState> {
     } catch (_) {
       state = state.copyWith(
         isLoading: false,
-        errorMessage: '投稿を読み込めませんでした',
+        errorMessage: '게시글을 불러오지 못했습니다',
       );
     }
   }

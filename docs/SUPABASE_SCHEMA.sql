@@ -1,7 +1,7 @@
--- Shokuba MVP schema draft.
+-- Shokuba MVP schema draft for Korean workers in Japan.
 -- Run in a Supabase project SQL editor, then tighten policies for production.
 
-create type board_kind as enum ('all', 'company', 'industry', 'job');
+create type board_kind as enum ('all', 'workplace', 'visa_labor', 'life');
 create type report_target_type as enum ('post', 'comment');
 create type report_status as enum ('open', 'reviewing', 'resolved', 'rejected');
 
@@ -9,14 +9,14 @@ create table public.companies (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   email_domain text not null unique,
-  industry text not null default '未設定',
+  industry text not null default '미설정',
   created_at timestamptz not null default now()
 );
 
 create table public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   company_id uuid references public.companies(id),
-  job_badge text not null default '未設定',
+  job_badge text not null default '미설정',
   created_at timestamptz not null default now()
 );
 
@@ -26,8 +26,8 @@ create table public.posts (
   title text not null,
   body text not null,
   board_kind board_kind not null default 'all',
-  company_badge text not null default '認証済み企業',
-  job_badge text not null default '未設定',
+  company_badge text not null default '인증된 회사',
+  job_badge text not null default '미설정',
   comment_count integer not null default 0,
   reaction_count integer not null default 0,
   created_at timestamptz not null default now()
@@ -38,8 +38,8 @@ create table public.comments (
   post_id uuid not null references public.posts(id) on delete cascade,
   author_id uuid not null references public.profiles(id) on delete cascade,
   body text not null,
-  company_badge text not null default '認証済み企業',
-  job_badge text not null default '未設定',
+  company_badge text not null default '인증된 회사',
+  job_badge text not null default '미설정',
   created_at timestamptz not null default now()
 );
 

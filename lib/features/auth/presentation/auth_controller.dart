@@ -90,7 +90,7 @@ class AuthController extends StateNotifier<AuthUiState> {
 
     if (!_repository.isConfigured) {
       state = state.copyWith(
-        errorMessage: 'Supabase設定を追加してください',
+        errorMessage: 'Supabase 설정을 추가해 주세요',
         clearSentEmail: true,
       );
       return;
@@ -106,7 +106,7 @@ class AuthController extends StateNotifier<AuthUiState> {
     } catch (_) {
       state = state.copyWith(
         isLoading: false,
-        errorMessage: '認証メールを送信できませんでした',
+        errorMessage: '인증 메일을 보내지 못했습니다',
       );
     }
   }

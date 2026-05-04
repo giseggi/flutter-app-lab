@@ -1,8 +1,8 @@
 enum BoardKind {
-  all('all', '全体'),
-  company('company', '会社別'),
-  industry('industry', '業界別'),
-  job('job', '職種別');
+  all('all', '전체'),
+  workplace('workplace', '회사생활'),
+  visaLabor('visa_labor', '비자·노무'),
+  life('life', '생활정보');
 
   const BoardKind(this.databaseValue, this.label);
 
@@ -69,8 +69,8 @@ class CommunityPost {
       title: map['title'] as String,
       body: map['body'] as String,
       boardKind: BoardKind.fromDatabaseValue(map['board_kind'] as String),
-      companyBadge: map['company_badge'] as String? ?? '認証済み',
-      jobBadge: map['job_badge'] as String? ?? '未設定',
+      companyBadge: map['company_badge'] as String? ?? '인증된 회사',
+      jobBadge: map['job_badge'] as String? ?? '미설정',
       createdAt: DateTime.parse(map['created_at'] as String),
       commentCount: map['comment_count'] as int? ?? 0,
       reactionCount: map['reaction_count'] as int? ?? 0,
@@ -114,8 +114,8 @@ class CommunityComment {
       id: map['id'] as String,
       postId: map['post_id'] as String,
       body: map['body'] as String,
-      companyBadge: map['company_badge'] as String? ?? '認証済み',
-      jobBadge: map['job_badge'] as String? ?? '未設定',
+      companyBadge: map['company_badge'] as String? ?? '인증된 회사',
+      jobBadge: map['job_badge'] as String? ?? '미설정',
       createdAt: DateTime.parse(map['created_at'] as String),
     );
   }

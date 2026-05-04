@@ -101,8 +101,8 @@ class SupabaseCommunityRepository implements CommunityRepository {
 
     if (row == null) {
       return const _BadgeContext(
-        companyBadge: '認証済み企業',
-        jobBadge: '未設定',
+        companyBadge: '인증된 회사',
+        jobBadge: '미설정',
       );
     }
 
@@ -111,8 +111,8 @@ class SupabaseCommunityRepository implements CommunityRepository {
         company is Map<String, dynamic> ? company['name'] as String? : null;
 
     return _BadgeContext(
-      companyBadge: companyName ?? '認証済み企業',
-      jobBadge: row['job_badge'] as String? ?? '未設定',
+      companyBadge: companyName ?? '인증된 회사',
+      jobBadge: row['job_badge'] as String? ?? '미설정',
     );
   }
 }
@@ -132,23 +132,33 @@ class DemoCommunityRepository implements CommunityRepository {
       : _posts = [
           CommunityPost(
             id: 'demo-1',
-            title: '新卒研修の内容、どこまで実務に近いですか？',
-            body: '配属前研修が長めなのですが、現場とのギャップが気になっています。',
+            title: '일본 회사 회식 문화, 어디까지 맞춰야 할까요?',
+            body: '입사한 지 얼마 안 됐는데 회식 참석 압박이 생각보다 큽니다. 다들 어떻게 조율하시나요?',
             boardKind: BoardKind.all,
-            companyBadge: '認証済み企業',
-            jobBadge: 'エンジニア',
+            companyBadge: '인증된 회사',
+            jobBadge: '개발',
             createdAt: DateTime.now().subtract(const Duration(minutes: 18)),
             commentCount: 3,
           ),
           CommunityPost(
             id: 'demo-2',
-            title: 'リモート勤務の実態を知りたい',
-            body: '制度上は週3リモートですが、部署によって差が大きいです。',
-            boardKind: BoardKind.company,
-            companyBadge: '認証済み企業',
-            jobBadge: '企画',
+            title: '기술·인문지식 비자 갱신 준비, 회사 서류는 언제 요청하세요?',
+            body: '재류기간 갱신이 3개월 정도 남았습니다. 재직증명서와 원천징수표 준비 타이밍이 궁금합니다.',
+            boardKind: BoardKind.visaLabor,
+            companyBadge: '인증된 회사',
+            jobBadge: '기획',
             createdAt: DateTime.now().subtract(const Duration(hours: 2)),
             commentCount: 1,
+          ),
+          CommunityPost(
+            id: 'demo-3',
+            title: '도쿄에서 전세 없이 이사할 때 초기비용 줄이는 팁 있나요?',
+            body: '보증회사 비용과 사례금이 부담됩니다. 한국인도 상담하기 편한 부동산 경험 공유 부탁드립니다.',
+            boardKind: BoardKind.life,
+            companyBadge: '인증된 회사',
+            jobBadge: '영업',
+            createdAt: DateTime.now().subtract(const Duration(hours: 4)),
+            commentCount: 2,
           ),
         ];
 
@@ -168,7 +178,7 @@ class DemoCommunityRepository implements CommunityRepository {
       title: draft.title,
       body: draft.body,
       boardKind: draft.boardKind,
-      companyBadge: '認証済み企業',
+      companyBadge: '인증된 회사',
       jobBadge: draft.jobBadge,
       createdAt: DateTime.now(),
     );
@@ -190,8 +200,8 @@ class DemoCommunityRepository implements CommunityRepository {
       id: DateTime.now().microsecondsSinceEpoch.toString(),
       postId: postId,
       body: body,
-      companyBadge: '認証済み企業',
-      jobBadge: 'エンジニア',
+      companyBadge: '인증된 회사',
+      jobBadge: '개발',
       createdAt: DateTime.now(),
     );
     _comments.putIfAbsent(postId, () => []).add(comment);
